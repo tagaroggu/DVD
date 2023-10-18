@@ -1,0 +1,6 @@
+{
+    "name": "dvd",
+    "version": "0.0.0",
+    "description": "Dumb Validator of Data",
+    "type": "module"
+}
