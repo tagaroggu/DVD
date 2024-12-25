@@ -1,34 +1,15 @@
 # DVD
-Dumb Validator of Data. Only checks if shape of data is correct. Does not handle whether data itself is correct (whether a string is a date, email, etc.) nor does this handle transformations. Does not yet handle validating contents of an array.
+Dumb Validator of Data.
 
 ## Example
 ```js
-import { schema, validate } from 'dvd';
+import DVD from 'dvd';
 
-const requiredShape = {
-    name: "string",
-    // Unions are formed through arrays
-    id: ["string", "number", "symbol"],
-    // Nested objects are recursed through
-    style: {
-        hat: "string",
-        glasses: "boolean"
-    },
-    atoms: "bigint",
-    // Classes (typeof givenClass === "function") are checked with instanceof
-    view: HTMLElement
-    // Undefined allows optional fields
-    accessories: ["array", "undefined"]
-    // Functions/methods
-    doAction: Function
-}
+const schema = DVD.object({
+    name: DVD.string(),
+    id: DVD.string(),
+    timestamp: DVD.number(n => n >= 0),
+    handedness: DVD.union([DVD.literal('left'), DVD.literal('right')])
+})
 
-const requiredShapeSchema = schema(requiredShape);
-
-console.log(requiredShapeSchema(data)) // true or false
-console.log(validate(requiredShape2, data)) // same as above
 ```
-
-To do:
-- Allow checking array contents. May require other changes.
-- Maybe change to allow validator functions
